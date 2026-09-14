@@ -11,6 +11,7 @@ import Image from "next/image"
 import { UpsellCombo } from "./upsell-combo"
 import { UpsellComida, UPSELL_PRODUCT_IDS } from "./upsell-comida"
 import { products } from "@/lib/data"
+import { MIN_ORDER_VALUE } from "@/lib/pedido-minimo"
 
 interface CartDrawerProps {
   isOpen: boolean
@@ -18,7 +19,6 @@ interface CartDrawerProps {
   onNavigateToCategory?: (categoryId: string) => void
 }
 
-const MIN_ORDER_VALUE = 85
 // Único produto que pode furar o pedido mínimo (usado pra testes de checkout).
 const TEST_PRODUCT_ID = "teste-5"
 // Valor de frete "de" (riscado) só para evidenciar a economia da entrega grátis.

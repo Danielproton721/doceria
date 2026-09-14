@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Star, MapPin, ChevronDown, ChevronRight, Search, Heart, Truck } from "lucide-react"
 import Image from "next/image"
+import { MIN_ORDER_VALUE } from "@/lib/pedido-minimo"
 
 interface StoreHeaderProps {
   userAddress?: string | null
@@ -114,7 +115,7 @@ export function StoreHeader({ userAddress, onChangeAddress }: StoreHeaderProps) 
             <ChevronRight className="w-6 h-6 text-muted-foreground shrink-0 group-hover:translate-x-0.5 transition-transform" />
           </button>
           <p className="mt-1.5 text-sm text-muted-foreground">
-            Entrega rápida • 2,5 km • Mín R$ 85,00
+            Entrega rápida • 2,5 km • Mín R$ {MIN_ORDER_VALUE.toFixed(2).replace(".", ",")}
           </p>
 
           <div className="my-4 border-t border-border" />
