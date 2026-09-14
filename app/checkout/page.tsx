@@ -1344,7 +1344,7 @@ function CheckoutContent() {
             className="flex items-center justify-center gap-2 text-xs text-gray-400 font-bold mb-8"
           >
             <ShieldCheck className="w-4 h-4" />
-            Compra 100% segura — CumpadiFood
+            Compra 100% segura — Lumi Doçura
           </motion.div>
 
           {/* Botão voltar para loja */}
@@ -1390,7 +1390,7 @@ function CheckoutContent() {
               
               <h2 className="text-3xl font-black text-gray-900 mb-2 uppercase tracking-tight">Espera aí!</h2>
               <p className="text-gray-600 font-medium mb-6 text-sm sm:text-base leading-relaxed">
-                Você está a um passo de garantir suas bebidas geladas com <strong className="text-[#22c55e]">Entrega Grátis</strong>. Tem certeza que deseja abandonar seu carrinho?
+                Você está a um passo de garantir seus doces com <strong className="text-[#22c55e]">Entrega Grátis</strong>. Tem certeza que deseja abandonar seu carrinho?
               </p>
               
               <div className="space-y-3">
@@ -1472,10 +1472,10 @@ function CheckoutContent() {
             {/* Loja */}
             <div className="flex items-center gap-3 pb-3 border-b border-gray-100">
               <div className="w-11 h-11 rounded-full bg-white ring-1 ring-gray-200 overflow-hidden flex items-center justify-center shrink-0">
-                <img src="/logo-cumpadi.png" alt="CumpadiFood" className="w-full h-full object-contain" />
+                <img src="/logo-lumi.png" alt="Lumi Doçura" className="w-full h-full object-contain" />
               </div>
               <div className="min-w-0">
-                <p className="font-extrabold text-gray-900 leading-tight">CumpadiFood</p>
+                <p className="font-extrabold text-gray-900 leading-tight">Lumi Doçura</p>
                 <button type="button" onClick={() => (window.location.href = '/')} className="text-sm font-bold text-[#e23744]">Adicionar mais itens</button>
               </div>
             </div>
@@ -1679,10 +1679,10 @@ function CheckoutContent() {
                 {/* Loja */}
                 <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
                   <div className="w-11 h-11 rounded-full bg-white ring-1 ring-gray-200 overflow-hidden flex items-center justify-center shrink-0">
-                    <img src="/logo-cumpadi.png" alt="CumpadiFood" className="w-full h-full object-contain" />
+                    <img src="/logo-lumi.png" alt="Lumi Doçura" className="w-full h-full object-contain" />
                   </div>
                   <div className="min-w-0">
-                    <p className="font-extrabold text-gray-900 leading-tight">CumpadiFood</p>
+                    <p className="font-extrabold text-gray-900 leading-tight">Lumi Doçura</p>
                     <button onClick={() => (window.location.href = '/')} className="text-sm font-bold text-[#e23744]">Adicionar mais itens</button>
                   </div>
                 </div>
@@ -1778,7 +1778,7 @@ function CheckoutContent() {
 
                         {/* O prêmio: o que já está indo pra porta */}
                         <div className="mb-3 w-full max-w-sm rounded-xl border border-gray-200 bg-white p-3 text-left shadow-sm">
-                          <p className="mb-2 text-xs font-extrabold text-gray-900">🍻 Já indo pra sua porta:</p>
+                          <p className="mb-2 text-xs font-extrabold text-gray-900">🍓 Já indo pra sua porta:</p>
                           <ul className="space-y-1">
                             {items.slice(0, 4).map((it) => (
                               <li key={it.id} className="flex items-center gap-2 text-xs text-gray-600">

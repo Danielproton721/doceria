@@ -1,6 +1,5 @@
-// Template do e-mail de confirmação de pedido — CompadreFood.
-// Portado do projeto "loja estilo shopify" e rebrandeado (vermelho + bebida,
-// entrega grátis em 1h, sem Correios/rastreio).
+// Template do e-mail de confirmação de pedido — Lumi Doçura.
+// Portado do projeto "loja estilo shopify" (entrega grátis em 1h, sem Correios/rastreio).
 
 export type OrderEmailItem = {
   id?: number | string;
@@ -42,20 +41,16 @@ export type OrderEmailInput = {
   gclid?: string;
 };
 
-// Marca derivada do domínio da loja (NEXT_PUBLIC_APP_URL, que JÁ existe) — assim
-// a mesma base serve compadre e cumpadi SEM env var nova. Domínio com "cumpadi"
-// = CumpadiFood + logo do mascote; qualquer outro cai no padrão CompadreFood.
 const APP_URL =
-  process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || "https://v0-del-ivery-copia-dany.vercel.app";
-const IS_CUMPADI = /cumpadi/i.test(APP_URL);
-const BRAND_NAME = IS_CUMPADI ? "CumpadiFood" : "CompadreFood";
-const BRAND_LOGO_URL = `${APP_URL}/${IS_CUMPADI ? "logo-cumpadi.png" : "logo.png"}`;
+  process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || "https://lumidocura.com.br";
+const BRAND_NAME = "Lumi Doçura";
+const BRAND_LOGO_URL = `${APP_URL}/logo-lumi.png`;
 
 // Paleta brand (vermelho dominante + verde pra "confirmado")
 const C = {
   primary: "#1a1a1a",
   dark: "#1a1a1a",
-  accent: "#e8202b", // vermelho CompadreFood
+  accent: "#e8202b", // vermelho da marca
   accentSoft: "#fff1f1",
   accentBorder: "#f6c9cc",
   green: "#16a34a",
@@ -149,7 +144,7 @@ export function renderOrderConfirmationEmail(order: OrderEmailInput) {
     <!-- header / logo -->
     <div style="background:${C.card};padding:24px 32px 20px;text-align:center;border-bottom:1px solid ${C.lineSoft};">
       <img src="${BRAND_LOGO_URL}" alt="${BRAND_NAME}" height="80" style="display:inline-block;height:80px;width:auto;max-width:240px;border:0;outline:none;text-decoration:none;" />
-      <p style="margin:6px 0 0;font-size:11px;color:${C.muted};letter-spacing:1.4px;text-transform:uppercase;">Bebida gelada na sua casa 🍻</p>
+      <p style="margin:6px 0 0;font-size:11px;color:${C.muted};letter-spacing:1.4px;text-transform:uppercase;">Doces com entrega rápida 🍓</p>
     </div>
 
     <!-- intro -->
@@ -158,7 +153,7 @@ export function renderOrderConfirmationEmail(order: OrderEmailInput) {
         Olá, ${escapeHtml(firstName)} — recebemos seu pedido <span style="color:${C.accent};">${escapeHtml(order.orderCode)}</span>.
       </h1>
       <p style="margin:0;font-size:12px;color:${C.muted};line-height:1.45;">
-        O pagamento foi confirmado e seu pedido já está sendo preparado. Chega geladinho em até 1 hora.
+        O pagamento foi confirmado e seu pedido já está sendo preparado. Chega em até 1 hora.
       </p>
     </div>
 
@@ -253,7 +248,7 @@ export function renderOrderConfirmationEmail(order: OrderEmailInput) {
         <div style="padding:0 24px 22px;background:${C.cardSoft};">
           <div style="background:${C.accentSoft};border:1px solid ${C.accentBorder};border-radius:9px;padding:12px;text-align:center;">
             <p style="margin:0;font-size:12px;color:#9a1b1b;line-height:1.45;">
-              Seu pedido já está sendo preparado e sai geladinho — entrega em até 1 hora na sua casa. 🛵
+              Seu pedido já está sendo preparado — entrega em até 1 hora na sua casa. 🛵
             </p>
           </div>
         </div>
@@ -276,7 +271,7 @@ export function renderOrderConfirmationEmail(order: OrderEmailInput) {
       </div>
       <div style="width:42px;height:2px;background:${C.accent};margin:10px auto 14px;"></div>
       <p style="margin:0 0 14px;font-size:11px;color:${C.mutedSoft};line-height:1.45;">
-        Bebida gelada, entrega rápida.
+        Doces com entrega rápida.
       </p>
       <div style="border-top:1px solid ${C.footerLine};padding-top:14px;">
         <p style="margin:0;font-size:11px;color:#8a8a8a;">© ${new Date().getFullYear()} ${BRAND_NAME}. Todos os direitos reservados.</p>
@@ -321,7 +316,7 @@ export function renderAbandonedCartEmail(order: OrderEmailInput) {
     })
     .join("");
 
-  const subject = `${firstName}, você esqueceu sua gelada 🍺 · ${BRAND_NAME}`;
+  const subject = `${firstName}, seus doces ficaram no carrinho 🍓 · ${BRAND_NAME}`;
   const shipping = order.shipping ?? 0;
   const amber = "#b45309";
   const amberSoft = "#fff7ed";
@@ -336,7 +331,7 @@ export function renderAbandonedCartEmail(order: OrderEmailInput) {
 </head>
 <body style="margin:0;padding:0;background:${C.bg};font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;">
   <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
-    Você deixou itens no carrinho da ${BRAND_NAME}. Finalize antes que a gelada acabe!
+    Você deixou itens no carrinho da ${BRAND_NAME}. Finalize antes que acabe!
   </div>
 
   <div style="max-width:600px;margin:0 auto;background:${C.card};">
@@ -344,12 +339,12 @@ export function renderAbandonedCartEmail(order: OrderEmailInput) {
 
     <div style="background:${C.card};padding:24px 32px 20px;text-align:center;border-bottom:1px solid ${C.lineSoft};">
       <img src="${BRAND_LOGO_URL}" alt="${BRAND_NAME}" height="80" style="display:inline-block;height:80px;width:auto;max-width:240px;border:0;outline:none;text-decoration:none;" />
-      <p style="margin:6px 0 0;font-size:11px;color:${C.muted};letter-spacing:1.4px;text-transform:uppercase;">Bebida gelada na sua casa 🍻</p>
+      <p style="margin:6px 0 0;font-size:11px;color:${C.muted};letter-spacing:1.4px;text-transform:uppercase;">Doces com entrega rápida 🍓</p>
     </div>
 
     <div style="background:${C.cardSofter};padding:22px 30px;text-align:center;border-bottom:1px solid ${C.line};">
       <h1 style="margin:0 0 7px;font-size:19px;color:${C.primary};font-weight:700;line-height:1.25;">
-        Ei, ${escapeHtml(firstName)} — sua gelada ficou no carrinho! 🛒
+        Ei, ${escapeHtml(firstName)} — seus doces ficaram no carrinho! 🛒
       </h1>
       <p style="margin:0;font-size:12px;color:${C.muted};line-height:1.45;">
         Você começou um pedido mas não finalizou o pagamento. Os itens ainda estão te esperando — é só concluir.
@@ -425,7 +420,7 @@ export function renderAbandonedCartEmail(order: OrderEmailInput) {
       </div>
       <div style="width:42px;height:2px;background:${C.accent};margin:10px auto 14px;"></div>
       <p style="margin:0 0 14px;font-size:11px;color:${C.mutedSoft};line-height:1.45;">
-        Bebida gelada, entrega rápida.
+        Doces com entrega rápida.
       </p>
       <div style="border-top:1px solid ${C.footerLine};padding-top:14px;">
         <p style="margin:0;font-size:11px;color:#8a8a8a;">© ${new Date().getFullYear()} ${BRAND_NAME}. Todos os direitos reservados.</p>

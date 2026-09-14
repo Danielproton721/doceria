@@ -39,7 +39,7 @@ export function AdminLogin() {
       >
         <div className="flex items-center gap-2 text-foreground">
           <Lock className="w-5 h-5 text-primary" />
-          <h1 className="text-lg font-bold">Painel CompadreFood</h1>
+          <h1 className="text-lg font-bold">Painel Lumi Doçura</h1>
         </div>
         <p className="text-sm text-muted-foreground">Acesso restrito. Digite a senha do administrador.</p>
         <input

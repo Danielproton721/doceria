@@ -11,7 +11,7 @@ const DELAY_AFTER_READY_MS = 7000
 
 // Popup promocional da home: oferece o cupom de PRIMEIRA COMPRA (10% OFF).
 // Aparece a cada carregamento, mas só começa a contar o tempo depois que o
-// age-gate (localStorage `age_verified`) e a localização (localStorage
+// a localização (localStorage
 // `delivery_address`) já foram resolvidos. `suppressed` reflete o popup de
 // localização aberto (estado do React na home).
 export function CouponPopup({ suppressed = false }: { suppressed?: boolean }) {
@@ -28,7 +28,6 @@ export function CouponPopup({ suppressed = false }: { suppressed?: boolean }) {
     const isReady = () => {
       try {
         return (
-          localStorage.getItem("age_verified") === "true" &&
           !!localStorage.getItem("delivery_address")
         )
       } catch {
@@ -101,7 +100,7 @@ export function CouponPopup({ suppressed = false }: { suppressed?: boolean }) {
           <p className="mt-1 text-5xl font-black leading-none">
             10% <span className="text-promo">OFF</span>
           </p>
-          <p className="mt-2 text-sm font-bold">na sua primeira compra 🍻</p>
+          <p className="mt-2 text-sm font-bold">na sua primeira compra 🍓</p>
         </div>
 
         <div className="space-y-3 p-4">
@@ -131,7 +130,7 @@ export function CouponPopup({ suppressed = false }: { suppressed?: boolean }) {
 
           {copied ? (
             <p className="text-center text-xs font-semibold text-emerald-700">
-              ✓ Cupom aplicado! É só finalizar o pedido. 🍺
+              ✓ Cupom aplicado! É só finalizar o pedido. 🍓
             </p>
           ) : (
             <p className="text-center text-xs text-muted-foreground">

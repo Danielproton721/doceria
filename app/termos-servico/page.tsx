@@ -23,7 +23,7 @@ export default function TermosServico() {
             <section className="space-y-2">
               <h2 className="text-lg font-semibold text-foreground">1. Aceitação dos Termos</h2>
               <p>
-                Ao usar a plataforma da DCM FOODS DELIVERY LTDA (CumpadiFood), você concorda com estes Termos de Serviço. Se não concordar
+                Ao usar a plataforma da DCM FOODS DELIVERY LTDA (Lumi Doçura), você concorda com estes Termos de Serviço. Se não concordar
                 com alguma disposição, por favor, não use nossos serviços.
               </p>
             </section>
@@ -31,7 +31,7 @@ export default function TermosServico() {
             <section className="space-y-2">
               <h2 className="text-lg font-semibold text-foreground">2. Descrição do Serviço</h2>
               <p>
-                Oferecemos uma plataforma de comércio eletrônico para venda de bebidas de qualidade com entrega rápida.
+                Oferecemos uma plataforma de comércio eletrônico para venda de doces com entrega rápida.
               </p>
             </section>
 
@@ -86,7 +86,7 @@ export default function TermosServico() {
             <section className="space-y-2">
               <h2 className="text-lg font-semibold text-foreground">9. Contato</h2>
               <p>
-                Para dúvidas ou reclamações, entre em contato conosco pelo e-mail pedidos-suporte@cumpadifood.com
+                Para dúvidas ou reclamações, entre em contato conosco pelo e-mail contato@lumidocura.com.br
               </p>
               <p>
                 <strong className="text-foreground">DCM FOODS DELIVERY LTDA</strong> — CNPJ 65.217.268/0001-25

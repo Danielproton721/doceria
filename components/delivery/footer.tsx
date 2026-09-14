@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { FileText, Shield, Cookie, ShieldAlert, RefreshCcw, Truck, Mail } from "lucide-react"
+import { FileText, Shield, Cookie, RefreshCcw, Truck, Mail } from "lucide-react"
 
 export function Footer() {
   return (
@@ -56,21 +56,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Aviso +18 */}
-        <div className="mb-8 bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <div className="flex items-start gap-3">
-            <ShieldAlert className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm font-semibold text-amber-800 mb-1">
-                {"+18 \u2014 Venda proibida para menores"}
-              </p>
-              <p className="text-xs text-amber-700 leading-relaxed">
-                {"A venda de bebidas alco\u00f3licas \u00e9 permitida apenas para maiores de 18 anos. A idade poder\u00e1 ser conferida no ato da entrega. Beba com modera\u00e7\u00e3o."}
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* Informações da Empresa */}
         <div className="border-t border-border pt-6 mt-6 space-y-1">
           <p className="text-xs font-semibold text-foreground">DCM FOODS DELIVERY LTDA</p>
@@ -80,7 +65,7 @@ export function Footer() {
           </p>
           <p className="text-xs text-muted-foreground">
             Contato:{" "}
-            <a href="mailto:pedidos-suporte@cumpadifood.com" className="text-primary hover:underline">pedidos-suporte@cumpadifood.com</a>
+            <a href="mailto:contato@lumidocura.com.br" className="text-primary hover:underline">contato@lumidocura.com.br</a>
           </p>
           <p className="text-xs text-muted-foreground pt-1">
             © {new Date().getFullYear()} DCM FOODS DELIVERY LTDA. Todos os direitos reservados.

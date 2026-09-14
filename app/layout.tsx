@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Script from 'next/script'
 import { CookieBanner } from '@/components/cookie-banner'
-import { AgeVerification } from '@/components/delivery/age-verification'
 import { PresenceTracker } from '@/components/delivery/presence-tracker'
 import { CartProvider } from '@/lib/cart-context'
 import { GOOGLE_ADS_ID } from '@/lib/google-ads'
@@ -13,8 +12,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'CumpadiFood - Pedidos Online',
-  description: 'Bebida gelada pro teu bloco - entrega rapida!',
+  title: 'Lumi Doçura - Doces Delivery',
+  description: 'Morango cravejado, açaí, copos da felicidade e sobremesas na travessa com entrega rápida.',
 }
 
 export const viewport: Viewport = {
@@ -50,7 +49,6 @@ export default function RootLayout({
       </head>
       <body className={`font-sans antialiased`}>
         <CartProvider>
-          <AgeVerification />
           {children}
           <CookieBanner />
           <PresenceTracker />

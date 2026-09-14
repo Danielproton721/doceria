@@ -66,7 +66,7 @@ export default async function AdminPage() {
       <div className="max-w-6xl mx-auto px-4 py-6">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-xl font-bold text-foreground">Pedidos · CompadreFood</h1>
+            <h1 className="text-xl font-bold text-foreground">Pedidos · Lumi Doçura</h1>
             <p className="text-xs text-muted-foreground mt-0.5">
               {total} pedido(s) · {pagos} pago(s) · {abandonados} abandonado(s)
             </p>

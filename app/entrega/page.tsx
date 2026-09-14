@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, ShieldAlert } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import { Footer } from "@/components/delivery/footer"
 
 export default function Entrega() {
@@ -52,32 +52,17 @@ export default function Entrega() {
               <p>
                 Após a confirmação do pagamento, você recebe a confirmação do pedido por e-mail. Para acompanhar o status
                 ou tirar dúvidas sobre a entrega, entre em contato pelo e-mail
-                <strong className="text-foreground"> pedidos-suporte@cumpadifood.com</strong> informando o número do pedido.
+                <strong className="text-foreground"> contato@lumidocura.com.br</strong> informando o número do pedido.
               </p>
             </section>
 
             <section className="space-y-2">
               <h2 className="text-lg font-semibold text-foreground">5. Recebimento</h2>
               <p>
-                A entrega é feita no endereço informado no pedido. É necessário que haja uma pessoa
-                <strong className="text-foreground"> maior de 18 anos</strong> para receber os produtos, podendo ser
-                solicitada a apresentação de documento de identidade com foto.
+                A entrega é feita no endereço informado no pedido. É necessário que haja alguém no local para
+                receber os produtos.
               </p>
             </section>
-          </div>
-
-          {/* Aviso +18 */}
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-            <div className="flex items-start gap-3">
-              <ShieldAlert className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-semibold text-amber-800 mb-1">+18 — Venda proibida para menores</p>
-                <p className="text-xs text-amber-700 leading-relaxed">
-                  A venda de bebidas alcoólicas é permitida apenas para maiores de 18 anos. A idade poderá ser conferida no
-                  ato da entrega. Beba com moderação.
-                </p>
-              </div>
-            </div>
           </div>
 
           <div className="text-xs text-muted-foreground pt-6 border-t border-border">

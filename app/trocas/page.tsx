@@ -39,20 +39,15 @@ export default function TrocasDevolucoes() {
               <p>Para que a troca ou devolução seja aceita, o produto deve estar:</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Na embalagem original, sem indícios de uso;</li>
-                <li>Acompanhado do comprovante de compra ou número do pedido;</li>
-                <li>
-                  <strong className="text-foreground">Lacrado e sem violação</strong> — no caso de bebidas alcoólicas.
-                </li>
+                <li>Acompanhado do comprovante de compra ou número do pedido.</li>
               </ul>
             </section>
 
             <section className="space-y-2">
-              <h2 className="text-lg font-semibold text-foreground">3. Particularidade das Bebidas Alcoólicas</h2>
+              <h2 className="text-lg font-semibold text-foreground">3. Particularidade dos Alimentos</h2>
               <p>
-                Por questões sanitárias, de segurança e de saúde pública, <strong className="text-foreground">bebidas alcoólicas
-                só podem ser devolvidas se estiverem lacradas e sem qualquer violação do lacre</strong>. Produtos abertos,
-                consumidos parcialmente ou com lacre rompido não poderão ser aceitos para devolução, exceto nos casos de
-                defeito de fabricação ou avaria comprovada.
+                Por questões sanitárias, <strong className="text-foreground">alimentos não podem ser devolvidos depois de
+                abertos ou consumidos</strong>, exceto em caso de produto errado, danificado ou com defeito.
               </p>
             </section>
 
@@ -69,7 +64,7 @@ export default function TrocasDevolucoes() {
             <section className="space-y-2">
               <h2 className="text-lg font-semibold text-foreground">5. Como Solicitar</h2>
               <p>
-                Envie um e-mail para <strong className="text-foreground">pedidos-suporte@cumpadifood.com</strong> informando o
+                Envie um e-mail para <strong className="text-foreground">contato@lumidocura.com.br</strong> informando o
                 <strong className="text-foreground"> número do pedido</strong>, o motivo da troca/devolução e, se possível,
                 fotos do produto. Nossa equipe responderá com as orientações para a coleta ou devolução.
               </p>
@@ -80,7 +75,7 @@ export default function TrocasDevolucoes() {
               <p>
                 Nos casos de <strong className="text-foreground">arrependimento (art. 49 do CDC)</strong> e de
                 <strong className="text-foreground"> produto com defeito/avaria</strong>, o custo da devolução é
-                <strong className="text-foreground"> por conta da CumpadiFood</strong> — você não paga nada pelo frete de retorno.
+                <strong className="text-foreground"> por conta da Lumi Doçura</strong> — você não paga nada pelo frete de retorno.
               </p>
             </section>
 

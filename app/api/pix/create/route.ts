@@ -161,7 +161,7 @@ export async function POST(request: Request) {
       cpfDigits,
       phoneDigits,
       ip: buyerIp,
-      title: title || "Pedido CompadreFood",
+      title: title || "Pedido Lumi Doçura",
       postbackUrl,
     })
 
@@ -227,7 +227,7 @@ export async function POST(request: Request) {
       cpfDigits,
       phoneDigits,
       ip: buyerIp,
-      title: title || "Pedido CumpadiFood",
+      title: title || "Pedido Lumi Doçura",
       postbackUrl,
       address,
     })

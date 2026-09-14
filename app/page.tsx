@@ -12,7 +12,6 @@ import { SearchBar } from "@/components/delivery/search-bar"
 import { CategoryNav } from "@/components/delivery/category-nav"
 import { FeaturedProductCard } from "@/components/delivery/featured-product-card"
 import { CompactProductCard } from "@/components/delivery/compact-product-card"
-import { ReviewsSection } from "@/components/delivery/reviews-section"
 import { CartButton } from "@/components/delivery/cart-button"
 import { CartDrawer } from "@/components/delivery/cart-drawer"
 import { ProductDetail } from "@/components/delivery/product-detail"
@@ -291,7 +290,6 @@ function DeliveryApp() {
         )}
 
         <AboutUs />
-        <ReviewsSection />
 
         {/* Footer */}
         <Footer />

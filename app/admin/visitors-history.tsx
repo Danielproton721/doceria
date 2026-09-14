@@ -21,7 +21,7 @@ import "react-day-picker/style.css"
 type Day = { date: string; count: number }
 type Report = { days: Day[]; total: number; prevTotal: number }
 
-// Vermelho da marca CompadreFood (mesmo tom do --primary do globals.css).
+// Vermelho da marca (mesmo tom do --primary do globals.css).
 const BRAND = "#e23c2f"
 
 // Data local → "AAAA-MM-DD" (usa o que o usuário VÊ no calendário, sem conversão

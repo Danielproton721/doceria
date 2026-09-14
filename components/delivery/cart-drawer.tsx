@@ -154,7 +154,7 @@ export function CartDrawer({ isOpen, onClose, onNavigateToCategory }: CartDrawer
                 <ShoppingBag className="w-8 h-8 text-muted-foreground" />
               </div>
               <p className="font-bold text-foreground">Sua sacola está vazia</p>
-              <p className="text-sm text-muted-foreground mt-1">Adicione bebidas geladas e aproveite o frete grátis.</p>
+              <p className="text-sm text-muted-foreground mt-1">Adicione seus doces e aproveite o frete grátis.</p>
               <Button onClick={onClose} className="mt-5 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8">
                 Ver produtos
               </Button>
@@ -165,10 +165,10 @@ export function CartDrawer({ isOpen, onClose, onNavigateToCategory }: CartDrawer
                 {/* Linha da loja */}
                 <div className="flex items-center gap-3 py-4">
                   <div className="w-11 h-11 rounded-full bg-white ring-1 ring-border overflow-hidden flex items-center justify-center flex-shrink-0">
-                    <Image src="/logo-cumpadi.png" alt="CumpadiFood" width={44} height={44} className="object-contain" />
+                    <Image src="/logo-lumi.png" alt="Lumi Doçura" width={44} height={44} className="object-contain" />
                   </div>
                   <div className="min-w-0">
-                    <p className="font-extrabold text-foreground leading-tight">CumpadiFood</p>
+                    <p className="font-extrabold text-foreground leading-tight">Lumi Doçura</p>
                     <button
                       onClick={onClose}
                       className="text-sm font-bold text-primary hover:opacity-80 transition-opacity"
