@@ -43,6 +43,8 @@ export function CartDrawer({ isOpen, onClose, onNavigateToCategory }: CartDrawer
   const hasUpsellItemInCart = items.some((item) => UPSELL_PRODUCT_IDS.includes(item.product.id))
   // Pratos em coleção oculta = nada pra oferecer: pula o "Bateu a fome?" antes do checkout.
   const upsellDisponivel = products.some((p) => UPSELL_PRODUCT_IDS.includes(p.id))
+  // O montador de combo é de destilados: sem destilado à venda, o card some do carrinho.
+  const comboDisponivel = products.some((p) => p.category === "queridinhos")
 
   // O produto de teste libera o checkout mesmo abaixo do mínimo.
   const hasTestProduct = items.some((item) => item.product.id === TEST_PRODUCT_ID)
@@ -320,7 +322,7 @@ export function CartDrawer({ isOpen, onClose, onNavigateToCategory }: CartDrawer
                 </button>
 
                 {/* Upsell Combo - so mostra se nao tiver combo no carrinho */}
-                {!items.some((item) => item.isCombo) && (
+                {comboDisponivel && !items.some((item) => item.isCombo) && (
                   <div className="pb-2">
                     <UpsellCombo onAddCombo={addCombo} />
                   </div>
