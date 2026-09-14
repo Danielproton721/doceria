@@ -18,6 +18,7 @@ import { ProductDetail } from "@/components/delivery/product-detail"
 import { LocationPopup } from "@/components/delivery/location-popup"
 import { CouponPopup } from "@/components/delivery/coupon-popup"
 import { HighlightProducts } from "@/components/delivery/category-showcase"
+import { ProdutoDestaque } from "@/components/delivery/produto-destaque"
 import { PromoTimer } from "@/components/delivery/promo-timer"
 import { AboutUs } from "@/components/delivery/about-us"
 import { Footer } from "@/components/delivery/footer"
@@ -145,6 +146,8 @@ function DeliveryApp() {
       <main id="products-section" className={`max-w-lg mx-auto px-4 py-6 transition-all duration-300 ${isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"}`}>
         {activeCategory === HOME_CATEGORY_ID ? (
           <>
+            <ProdutoDestaque onSelect={(p) => setSelectedProduct(p)} />
+
             {copaOn && esquentaProducts.length > 0 && (
               <section className="mb-8">
                 <div className="-mx-4 mb-4 bg-gradient-to-r from-[#007a2f] via-[#009c3b] to-[#007a2f] px-4 py-3">

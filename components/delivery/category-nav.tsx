@@ -90,7 +90,7 @@ export function CategoryNav({ activeCategory, onCategoryChange }: CategoryNavPro
           className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide select-none cursor-grab active:cursor-grabbing"
         >
           {paginas.map((grupo, i) => (
-            <div key={i} className="w-full flex-shrink-0 snap-start grid grid-cols-3 gap-y-3 px-4">
+            <div key={i} className="w-full flex-shrink-0 snap-start grid grid-cols-[repeat(3,5.5rem)] justify-center gap-x-5 gap-y-3 px-4">
               {grupo.map((category) => (
                 <button
                   key={category.id}
