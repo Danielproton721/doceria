@@ -90,7 +90,7 @@ export function CategoryNav({ activeCategory, onCategoryChange }: CategoryNavPro
           className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide select-none cursor-grab active:cursor-grabbing"
         >
           {paginas.map((grupo, i) => (
-            <div key={i} className="w-full flex-shrink-0 snap-start grid grid-cols-3 gap-y-4 px-4">
+            <div key={i} className="w-full flex-shrink-0 snap-start grid grid-cols-3 gap-y-3 px-4">
               {grupo.map((category) => (
                 <button
                   key={category.id}
@@ -102,7 +102,7 @@ export function CategoryNav({ activeCategory, onCategoryChange }: CategoryNavPro
                 >
                   <div
                     className={cn(
-                      "w-[80px] h-[80px] rounded-2xl overflow-hidden border-2 transition-all duration-200 flex items-center justify-center bg-secondary/30",
+                      "w-16 h-16 rounded-xl overflow-hidden border-2 transition-all duration-200 flex items-center justify-center bg-secondary/30",
                       activeCategory === category.id
                         ? "border-primary shadow-md shadow-primary/20"
                         : "border-transparent"
@@ -119,7 +119,7 @@ export function CategoryNav({ activeCategory, onCategoryChange }: CategoryNavPro
                   </div>
                   <span
                     className={cn(
-                      "text-[11px] font-medium text-center leading-tight w-[92px] line-clamp-2",
+                      "text-[11px] font-medium text-center leading-tight w-[84px] line-clamp-2",
                       activeCategory === category.id
                         ? "text-foreground font-bold"
                         : "text-muted-foreground"
