@@ -1,0 +1,6 @@
+id,name,price,image,category,stock,active
+1,Coca-Cola Lata 350ml,5.90,https://placehold.co/80x80?text=Coca,Refrigerantes,120,true
+2,Água Mineral 500ml,2.50,https://placehold.co/80x80?text=Agua,Águas,300,true
+3,Cerveja Heineken 600ml,12.90,https://placehold.co/80x80?text=Heineken,Cervejas,80,true
+4,"Combo Pizza + Refri 2L",49.90,https://placehold.co/80x80?text=Combo,Combos,25,true
+5,Suco de Laranja 1L,8.90,https://placehold.co/80x80?text=Suco,Sucos,40,false
