@@ -133,6 +133,10 @@ function DeliveryApp() {
       />
       <CopaBanner />
       <SearchBar onProductSelect={(product) => setSelectedProduct(product)} />
+      {/* Destaque vem antes das coleções */}
+      <div className="max-w-lg mx-auto px-4 pt-2">
+        <ProdutoDestaque onSelect={(p) => setSelectedProduct(p)} />
+      </div>
       <CategoryNav
         activeCategory={activeCategory}
         onCategoryChange={handleCategoryChange}
@@ -146,8 +150,6 @@ function DeliveryApp() {
       <main id="products-section" className={`max-w-lg mx-auto px-4 py-6 transition-all duration-300 ${isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"}`}>
         {activeCategory === HOME_CATEGORY_ID ? (
           <>
-            <ProdutoDestaque onSelect={(p) => setSelectedProduct(p)} />
-
             {copaOn && esquentaProducts.length > 0 && (
               <section className="mb-8">
                 <div className="-mx-4 mb-4 bg-gradient-to-r from-[#007a2f] via-[#009c3b] to-[#007a2f] px-4 py-3">
