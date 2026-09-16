@@ -86,7 +86,7 @@ export default function TermosServico() {
             <section className="space-y-2">
               <h2 className="text-lg font-semibold text-foreground">9. Contato</h2>
               <p>
-                Para dúvidas ou reclamações, entre em contato conosco pelo e-mail contato@lumidocura.com.br
+                Para dúvidas ou reclamações, entre em contato conosco pelo e-mail contato@lumidocura.shop
               </p>
               <p>
                 <strong className="text-foreground">DCM FOODS DELIVERY LTDA</strong> — CNPJ 65.217.268/0001-25

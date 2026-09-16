@@ -52,7 +52,7 @@ export default function Entrega() {
               <p>
                 Após a confirmação do pagamento, você recebe a confirmação do pedido por e-mail. Para acompanhar o status
                 ou tirar dúvidas sobre a entrega, entre em contato pelo e-mail
-                <strong className="text-foreground"> contato@lumidocura.com.br</strong> informando o número do pedido.
+                <strong className="text-foreground"> contato@lumidocura.shop</strong> informando o número do pedido.
               </p>
             </section>
 

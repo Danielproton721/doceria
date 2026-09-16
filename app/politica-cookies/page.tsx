@@ -76,7 +76,7 @@ export default function PoliticaCookies() {
             <section className="space-y-2">
               <h2 className="text-lg font-semibold text-foreground">7. Contato</h2>
               <p>
-                Para dúvidas sobre cookies e privacidade, entre em contato pelo e-mail contato@lumidocura.com.br
+                Para dúvidas sobre cookies e privacidade, entre em contato pelo e-mail contato@lumidocura.shop
               </p>
               <p>
                 <strong className="text-foreground">DCM FOODS DELIVERY LTDA</strong> — CNPJ 65.217.268/0001-25

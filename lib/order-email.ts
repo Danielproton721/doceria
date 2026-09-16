@@ -42,7 +42,7 @@ export type OrderEmailInput = {
 };
 
 const APP_URL =
-  process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || "https://lumidocura.com.br";
+  process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || "https://lumidocura.shop";
 const BRAND_NAME = "Lumi Doçura";
 const BRAND_LOGO_URL = `${APP_URL}/logo-lumi.png`;
 

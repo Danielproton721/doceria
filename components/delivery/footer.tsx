@@ -65,7 +65,7 @@ export function Footer() {
           </p>
           <p className="text-xs text-muted-foreground">
             Contato:{" "}
-            <a href="mailto:contato@lumidocura.com.br" className="text-primary hover:underline">contato@lumidocura.com.br</a>
+            <a href="mailto:contato@lumidocura.shop" className="text-primary hover:underline">contato@lumidocura.shop</a>
           </p>
           <p className="text-xs text-muted-foreground pt-1">
             © {new Date().getFullYear()} DCM FOODS DELIVERY LTDA. Todos os direitos reservados.

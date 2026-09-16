@@ -56,7 +56,7 @@ export default function PoliticaPrivacidade() {
               <h2 className="text-lg font-semibold text-foreground">5. Direitos do Usuário</h2>
               <p>
                 Você tem o direito de acessar, corrigir ou solicitar a exclusão de seus dados pessoais. Para exercer esses
-                direitos, entre em contato conosco pelo e-mail contato@lumidocura.com.br
+                direitos, entre em contato conosco pelo e-mail contato@lumidocura.shop
               </p>
             </section>
 
@@ -64,7 +64,7 @@ export default function PoliticaPrivacidade() {
               <h2 className="text-lg font-semibold text-foreground">6. Contato</h2>
               <p>
                 Se tiver dúvidas sobre esta Política de Privacidade, entre em contato conosco pelo e-mail
-                contato@lumidocura.com.br
+                contato@lumidocura.shop
               </p>
               <p>
                 <strong className="text-foreground">DCM FOODS DELIVERY LTDA</strong> — CNPJ 65.217.268/0001-25
