@@ -24,7 +24,7 @@ async function getStoreBaseUrl() {
     return `${proto}://${host}`.replace(/\/$/, "")
   }
 
-  return "https://v0-del-ivery-copia-dany.vercel.app"
+  return "https://lumidocura.shop"
 }
 
 function Field({
