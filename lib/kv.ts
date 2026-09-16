@@ -9,7 +9,7 @@ const REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_A
 
 // Prefixo opcional aplicado a TODAS as chaves. Permite que duas lojas dividam a
 // MESMA instância Upstash sem misturar dados: cada loja define seu KV_PREFIX
-// (ex.: "cumpadi:"). Sem a var, o prefixo é "" e nada muda em relação ao de antes
+// (ex.: "lumi:"). Sem a var, o prefixo é "" e nada muda em relação ao de antes
 // — por isso é seguro para lojas que já usam o KV sem prefixo.
 const KEY_PREFIX = process.env.KV_PREFIX || ""
 const pk = (key: string) => `${KEY_PREFIX}${key}`

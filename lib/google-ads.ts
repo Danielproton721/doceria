@@ -1,7 +1,7 @@
 // ============================================================================
 //  Google Ads — configuração central da tag.
 //
-//  VAZIO de propósito: esta base veio da CumpadiFood e o ID de lá mandaria as
+//  VAZIO de propósito: esta base veio de outra loja e o ID de lá mandaria as
 //  conversões da doceria pra campanha de bebidas. Com GOOGLE_ADS_ID vazio a tag
 //  NÃO carrega e nenhuma conversão é enviada. Conta própria da Lumi Doçura:
 //  preencha os 3 valores abaixo.

@@ -3,7 +3,7 @@
 // ?gclid= na URL, e lido depois pra gravar no pedido (medição futura de
 // conversão offline). NÃO dispara nada nem muda comportamento do site.
 
-const GCLID_KEY = "cumpadi-gclid"
+const GCLID_KEY = "lumi-gclid"
 // Janela de conversão do Google (90 dias). Depois disso o gclid não credita mais.
 const GCLID_TTL_MS = 90 * 24 * 60 * 60 * 1000
 

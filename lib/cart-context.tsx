@@ -4,8 +4,8 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from "
 import type { CartItem, Product, Additional } from "./types"
 
 // Persistimos o carrinho para sobreviver à navegação até /checkout (e a reloads).
-const STORAGE_KEY = "compadrefood-cart"
-const COUPON_KEY = "compadrefood-coupon"
+const STORAGE_KEY = "lumi-cart"
+const COUPON_KEY = "lumi-coupon"
 
 // Cupons válidos: código (MAIÚSCULO) -> percentual de desconto (0.10 = 10%).
 // PRIMEIRA = cupom de primeira compra (10%) — alavanca de "pague o PIX agora".

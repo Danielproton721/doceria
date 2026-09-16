@@ -76,7 +76,7 @@ export default async function RelayAdminPage() {
   const notifyOverride = process.env.NOTIFY_URL_OVERRIDE?.trim() || ""
   const relaySecret = process.env.RELAY_SECRET?.trim() || ""
   // "Configurado" = a env existe e aponta pro relay. Não comparamos com um id
-  // fixo (que difere entre compadre, cumpadi, etc.) — só com o padrão do relay.
+  // fixo (que difere de loja pra loja) — só com o padrão do relay.
   const notifyConfigured = Boolean(notifyOverride) && notifyOverride.includes(RELAY_PATH_MARKER)
   const envBlock = `NOTIFY_URL_OVERRIDE=${notifyOverride || "https://SEU-RELAY/api/webhooks/payment/ID_DA_LOJA"}\nRELAY_SECRET=${relaySecret || "COLE_O_SEGREDO_DO_RELAY"}`
 

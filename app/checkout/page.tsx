@@ -17,11 +17,11 @@ const stepVariants = {
   exit: (dir: number) => ({ opacity: 0, x: dir >= 0 ? -14 : 14 }),
 };
 
-const ORDER_LOOKUP_STORAGE_KEY = 'compadrefood-order-lookup-v1';
+const ORDER_LOOKUP_STORAGE_KEY = 'lumi-order-lookup-v1';
 
 // Snapshot da tela de "Pedido Confirmado" — persistido para sobreviver a reload
 // ou à pessoa sair da aba e voltar (senão ela perde o código do pedido).
-const CONFIRMED_ORDER_STORAGE_KEY = 'compadrefood-confirmed-order-v1';
+const CONFIRMED_ORDER_STORAGE_KEY = 'lumi-confirmed-order-v1';
 
 type ConfirmedOrder = {
   orderCode: string;
@@ -73,7 +73,7 @@ function clearConfirmedOrder() {
 // Google Ads — conversao de compra. O send_to vem de lib/google-ads.ts (vazio
 // enquanto o ID novo nao for preenchido; sem ID a conversao nao dispara).
 const GOOGLE_ADS_CONVERSION_SEND_TO = adsSendTo(GOOGLE_ADS_PURCHASE_LABEL);
-const GOOGLE_ADS_CONVERSION_STORAGE_KEY = 'compadrefood-google-ads-conversions-v1';
+const GOOGLE_ADS_CONVERSION_STORAGE_KEY = 'lumi-google-ads-conversions-v1';
 
 declare global {
   interface Window {
@@ -247,7 +247,7 @@ function CheckoutContent() {
 
   // Nome que vai pro gateway (PIX e cartão): nome fixo do combo.
   const totalQty = items.reduce((sum, it) => sum + it.quantity, 0);
-  const orderTitle = "Combo Enxoval Fio de Nobres";
+  const orderTitle = "Pedido Lumi Docura";
 
   const removeItem = (id: string) => removeCartItem(id);
   const updateQuantity = (id: string, quantity: number) => updateCartQuantity(id, quantity);
