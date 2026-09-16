@@ -11,6 +11,18 @@ export interface Product {
   minQuantity?: number
   includes?: string[]
   accompaniments?: string[]
+  /** Tamanhos à escolha (ex.: P e G). Quando existe, a página do produto pede a
+   *  escolha e o preço passa a ser o do tamanho selecionado. */
+  tamanhos?: Tamanho[]
+}
+
+export interface Tamanho {
+  id: string
+  /** Como aparece no botão e no nome do item no carrinho (ex.: "P", "G"). */
+  nome: string
+  /** Texto de apoio no botão (ex.: "serve 6"). Opcional. */
+  detalhe?: string
+  price: number
 }
 
 export interface Additional {

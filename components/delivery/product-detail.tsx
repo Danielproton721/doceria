@@ -24,6 +24,12 @@ export function ProductDetail({ product, onClose, onSelectProduct }: ProductDeta
   useBackClose(true, onClose)
 
   const [quantity, setQuantity] = useState(1)
+  // Tamanho escolhido (só em produto com P/G). Começa no maior, que é o preço
+  // anunciado na vitrine — assim o valor do card nunca mente pro cliente.
+  const tamanhos = product.tamanhos ?? []
+  const [tamanhoId, setTamanhoId] = useState(tamanhos.length ? tamanhos[tamanhos.length - 1].id : "")
+  const tamanho = tamanhos.find((t) => t.id === tamanhoId)
+  const precoAtual = tamanho ? tamanho.price : product.price
   const [selectedAdditionals, setSelectedAdditionals] = useState<
     Record<string, number>
   >({})
@@ -48,9 +54,9 @@ export function ProductDetail({ product, onClose, onSelectProduct }: ProductDeta
   }, [])
   const [observation, setObservation] = useState("")
 
-  const discountPercent = product.originalPrice
-    ? Math.ceil(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : null
+  // Com tamanho escolhido, o riscado só vale pro tamanho que tem esse preço.
+  const precoDe = product.originalPrice && precoAtual === product.price ? product.originalPrice : null
+  const discountPercent = precoDe ? Math.ceil(((precoDe - precoAtual) / precoDe) * 100) : null
 
   const suggestedProducts = useMemo(() => {
     const others = products.filter((p) => p.id !== product.id)
@@ -90,7 +96,7 @@ export function ProductDetail({ product, onClose, onSelectProduct }: ProductDeta
     0
   )
 
-  const totalPrice = product.price * quantity
+  const totalPrice = precoAtual * quantity
 
   const handleAddToCart = () => {
     const additionalsArray = Object.entries(selectedAdditionals)
@@ -105,7 +111,18 @@ export function ProductDetail({ product, onClose, onSelectProduct }: ProductDeta
       setFreeAdditionalChosen(additionalsArray[0].additional)
     }
 
-    addItem(product, quantity, additionalsArray, observation)
+    // Cada tamanho vira uma linha própria no carrinho (ele junta itens pelo id),
+    // já com o nome e o preço daquele tamanho.
+    const escolhido = tamanho
+      ? {
+          ...product,
+          id: `${product.id}-${tamanho.id}`,
+          name: `${product.name} (${tamanho.nome})`,
+          price: tamanho.price,
+          originalPrice: precoDe ?? undefined,
+        }
+      : product
+    addItem(escolhido, quantity, additionalsArray, observation)
     onClose()
   }
 
@@ -138,15 +155,15 @@ export function ProductDetail({ product, onClose, onSelectProduct }: ProductDeta
           <h1 className="text-2xl font-bold text-foreground">{product.name}</h1>
           
           <div className="flex items-baseline gap-2 mt-2">
-            {product.originalPrice && (
+            {precoDe && (
               <span className="text-muted-foreground line-through">
-                de R$ {product.originalPrice.toFixed(2).replace(".", ",")} por
+                de R$ {precoDe.toFixed(2).replace(".", ",")} por
               </span>
             )}
           </div>
           <div className="flex items-center gap-2 mt-1">
             <p className="text-2xl font-bold text-primary">
-              R$ {product.price.toFixed(2).replace(".", ",")}
+              R$ {precoAtual.toFixed(2).replace(".", ",")}
             </p>
             {discountPercent && (
               <Badge className="bg-primary text-primary-foreground font-bold text-sm px-2.5 py-1">
@@ -159,6 +176,35 @@ export function ProductDetail({ product, onClose, onSelectProduct }: ProductDeta
             <p className="text-sm text-accent font-medium mt-2">
               Apenas {product.stock} disponíveis
             </p>
+          )}
+
+          {tamanhos.length > 0 && (
+            <div className="mt-6">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Escolha o tamanho</h2>
+              <p className="text-sm text-muted-foreground mb-3">O preço muda conforme o tamanho.</p>
+              <div className="flex gap-3">
+                {tamanhos.map((t) => {
+                  const ativo = t.id === tamanhoId
+                  return (
+                    <button
+                      key={t.id}
+                      type="button"
+                      onClick={() => setTamanhoId(t.id)}
+                      aria-pressed={ativo}
+                      className={`flex-1 rounded-xl border-2 px-4 py-3 text-left transition-all duration-200 active:scale-[0.98] ${
+                        ativo ? "border-primary bg-primary/5 shadow-sm" : "border-border bg-card hover:border-primary/40"
+                      }`}
+                    >
+                      <span className="block text-base font-bold text-foreground">{t.nome}</span>
+                      {t.detalhe && <span className="block text-xs text-muted-foreground">{t.detalhe}</span>}
+                      <span className={`mt-0.5 block text-sm font-bold ${ativo ? "text-primary" : "text-muted-foreground"}`}>
+                        R$ {t.price.toFixed(2).replace(".", ",")}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
           )}
 
           <div className="mt-6">
