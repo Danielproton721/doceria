@@ -30,6 +30,10 @@ export function ProductDetail({ product, onClose, onSelectProduct }: ProductDeta
   const [tamanhoId, setTamanhoId] = useState(tamanhos.length ? tamanhos[tamanhos.length - 1].id : "")
   const tamanho = tamanhos.find((t) => t.id === tamanhoId)
   const precoAtual = tamanho ? tamanho.price : product.price
+  // Sabor escolhido (só em produto com lista de sabores). Todos custam o mesmo;
+  // o sabor entra no nome do item, pra cozinha e cliente verem o que foi pedido.
+  const sabores = product.sabores ?? []
+  const [sabor, setSabor] = useState(sabores[0] ?? "")
   const [selectedAdditionals, setSelectedAdditionals] = useState<
     Record<string, number>
   >({})
@@ -111,14 +115,18 @@ export function ProductDetail({ product, onClose, onSelectProduct }: ProductDeta
       setFreeAdditionalChosen(additionalsArray[0].additional)
     }
 
-    // Cada tamanho vira uma linha própria no carrinho (ele junta itens pelo id),
-    // já com o nome e o preço daquele tamanho.
-    const escolhido = tamanho
+    // Cada combinação de tamanho/sabor vira uma linha própria no carrinho (ele
+    // junta itens pelo id), já com o nome e o preço daquela escolha.
+    const sufixoId = [tamanho?.id, sabor && sabor.toLowerCase().replace(/[^a-z0-9]+/gi, "-")]
+      .filter(Boolean)
+      .join("-")
+    const sufixoNome = [tamanho?.nome, sabor].filter(Boolean).join(" · ")
+    const escolhido = sufixoId
       ? {
           ...product,
-          id: `${product.id}-${tamanho.id}`,
-          name: `${product.name} (${tamanho.nome})`,
-          price: tamanho.price,
+          id: `${product.id}-${sufixoId}`,
+          name: `${product.name} (${sufixoNome})`,
+          price: precoAtual,
           originalPrice: precoDe ?? undefined,
         }
       : product
@@ -200,6 +208,33 @@ export function ProductDetail({ product, onClose, onSelectProduct }: ProductDeta
                       <span className={`mt-0.5 block text-sm font-bold ${ativo ? "text-primary" : "text-muted-foreground"}`}>
                         R$ {t.price.toFixed(2).replace(".", ",")}
                       </span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          {sabores.length > 0 && (
+            <div className="mt-6">
+              <h2 className="text-lg font-semibold text-foreground mb-1">Escolha o sabor</h2>
+              <p className="text-sm text-muted-foreground mb-3">Todos pelo mesmo preço.</p>
+              <div className="flex flex-wrap gap-2">
+                {sabores.map((s) => {
+                  const ativo = s === sabor
+                  return (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => setSabor(s)}
+                      aria-pressed={ativo}
+                      className={`rounded-full border-2 px-4 py-2 text-sm font-semibold transition-all duration-200 active:scale-95 ${
+                        ativo
+                          ? "border-primary bg-primary/5 text-primary shadow-sm"
+                          : "border-border bg-card text-foreground hover:border-primary/40"
+                      }`}
+                    >
+                      {s}
                     </button>
                   )
                 })}

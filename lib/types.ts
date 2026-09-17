@@ -14,6 +14,8 @@ export interface Product {
   /** Tamanhos à escolha (ex.: P e G). Quando existe, a página do produto pede a
    *  escolha e o preço passa a ser o do tamanho selecionado. */
   tamanhos?: Tamanho[]
+  /** Sabores à escolha. Todos custam o mesmo: só entram no nome do item. */
+  sabores?: string[]
 }
 
 export interface Tamanho {
