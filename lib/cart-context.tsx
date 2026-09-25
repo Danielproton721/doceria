@@ -79,7 +79,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Hidrata do localStorage só no cliente (evita mismatch de SSR).
   useEffect(() => {
     setItems(loadCart())
-    setCoupon(loadCoupon())
+    // ?cupom=XXXX no link (usado nos e-mails) já deixa o desconto aplicado.
+    const doLink = new URLSearchParams(window.location.search).get("cupom")?.trim().toUpperCase()
+    setCoupon(doLink && COUPONS[doLink] ? doLink : loadCoupon())
     setMounted(true)
   }, [])
 

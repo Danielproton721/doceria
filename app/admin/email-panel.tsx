@@ -13,6 +13,8 @@ type Estado = {
 const TIPOS = [
   { chave: "confirmacao", rotulo: "Pedido pago", desc: "A notinha — dispara quando o pagamento é confirmado.", preview: "" },
   { chave: "abandonado", rotulo: "Carrinho abandonado", desc: "Para quem gerou o PIX e não pagou.", preview: "?tipo=pendente" },
+  { chave: "desconto", rotulo: "Pendente com desconto", desc: "O mesmo lembrete, com cupom pra destravar a compra.", preview: "?tipo=desconto" },
+  { chave: "reativacao", rotulo: "Lead frio", desc: "Sumiu faz dias: sem cobrança, só chama de volta.", preview: "?tipo=reativacao" },
 ] as const
 
 export function EmailPanel() {
@@ -87,7 +89,7 @@ export function EmailPanel() {
       <div className="rounded-xl border border-border bg-card p-4">
         <h2 className="mb-3 text-sm font-bold text-foreground">Enviar um teste</h2>
 
-        <div className="mb-3 grid gap-2 sm:grid-cols-2">
+        <div className="mb-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {TIPOS.map((t) => (
             <button
               key={t.chave}

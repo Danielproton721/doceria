@@ -2,12 +2,17 @@ import { NextResponse } from "next/server"
 import { Resend } from "resend"
 
 import { isAuthed } from "@/lib/admin-auth"
-import { renderAbandonedCartEmail, renderOrderConfirmationEmail } from "@/lib/order-email"
+import {
+  renderAbandonedCartEmail,
+  renderOrderConfirmationEmail,
+  renderReengagementEmail,
+} from "@/lib/order-email"
+import { MANUAL_CTA_DESCONTO, MANUAL_CTA_HREF, OFERTA_DESCONTO } from "@/lib/manual-email"
 import { sampleOrder } from "@/lib/order-email-sample"
 
 export const dynamic = "force-dynamic"
 
-const TIPOS = ["confirmacao", "abandonado"] as const
+const TIPOS = ["confirmacao", "abandonado", "desconto", "reativacao"] as const
 type Tipo = (typeof TIPOS)[number]
 
 // Estado do Resend, pra aba mostrar o que falta antes de tentar enviar.
@@ -57,7 +62,13 @@ export async function POST(request: Request) {
   const base = sampleOrder()
   const order = sampleOrder({ customer: { ...base.customer, email: to } })
   const { subject, html } =
-    tipo === "abandonado" ? renderAbandonedCartEmail(order) : renderOrderConfirmationEmail(order)
+    tipo === "abandonado"
+      ? renderAbandonedCartEmail(order, { ctaHref: MANUAL_CTA_HREF })
+      : tipo === "desconto"
+        ? renderAbandonedCartEmail(order, { ctaHref: MANUAL_CTA_DESCONTO, oferta: OFERTA_DESCONTO })
+        : tipo === "reativacao"
+          ? renderReengagementEmail(order, { ctaHref: MANUAL_CTA_HREF })
+          : renderOrderConfirmationEmail(order)
 
   const from = process.env.RESEND_FROM_EMAIL || "Lumi Doçura <contato@lumidocura.shop>"
 

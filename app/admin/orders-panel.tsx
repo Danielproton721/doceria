@@ -66,8 +66,8 @@ type TipoEmail = keyof typeof MODELOS
 // diferentes (é a regra do cupom COMBO10 em lib/coupons).
 function modelosDo(o: AdminOrder): TipoEmail[] {
   if (o.status === "pago") return ["pago"]
-  // A loja tem dois modelos hoje: notinha do pago e lembrete de abandonado.
-  return ["abandonado"]
+  const comDesconto: TipoEmail[] = (o.items?.length ?? 0) >= 2 ? ["pendente-desconto"] : []
+  return ["abandonado", ...comDesconto, "reativacao"]
 }
 
 export function OrdersPanel({ orders, kvOk }: { orders: AdminOrder[]; kvOk: boolean }) {

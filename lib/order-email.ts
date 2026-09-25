@@ -68,6 +68,15 @@ const C = {
   footerLine: "#373737",
 };
 
+/** Imagem do item no e-mail precisa de endereço completo: cliente de e-mail
+ *  não resolve caminho relativo (o Gmail simplesmente não mostra). */
+function imgAbsoluta(src?: string) {
+  const raw = (src ?? "").trim();
+  if (!raw) return "";
+  if (/^https?:\/\//i.test(raw)) return raw;
+  return `${APP_URL}${raw.startsWith("/") ? "" : "/"}${raw}`;
+}
+
 const formatBRL = (value: number) => `R$ ${Number(value || 0).toFixed(2).replace(".", ",")}`;
 
 const escapeHtml = (value: string) =>
@@ -102,7 +111,7 @@ export function renderOrderConfirmationEmail(order: OrderEmailInput) {
       const lineTotal = item.price * item.quantity;
       const imgCell = item.image
         ? `<td width="56" style="padding:10px 12px 10px 0;vertical-align:top;">
-             <img src="${escapeHtml(item.image)}" width="56" height="56" alt="" style="display:block;width:56px;height:56px;border-radius:8px;border:1px solid ${C.line};object-fit:cover;" />
+             <img src="${escapeHtml(imgAbsoluta(item.image))}" width="56" height="56" alt="" style="display:block;width:56px;height:56px;border-radius:8px;border:1px solid ${C.line};object-fit:cover;" />
            </td>`
         : `<td width="56" style="padding:10px 12px 10px 0;vertical-align:top;">
              <div style="width:56px;height:56px;border-radius:8px;border:1px solid ${C.line};background:${C.cardSoft};"></div>
@@ -287,16 +296,33 @@ export function renderOrderConfirmationEmail(order: OrderEmailInput) {
 // E-mail de carrinho abandonado: mesmo visual do de confirmação, mas com tom de
 // lembrete e um CTA pra finalizar o pedido. Enviado pelo /api/abandoned/check
 // quando o pedido não foi pago dentro do prazo.
-export function renderAbandonedCartEmail(order: OrderEmailInput) {
+export type OfertaEmail = { pct: number; cupom: string };
+export type AbandonedEmailOptions = {
+  /** Pra onde o botão leva. Relativo vira absoluto com o domínio da loja. */
+  ctaHref?: string;
+  /** Quando tem oferta, o e-mail mostra o cupom e a porcentagem. */
+  oferta?: OfertaEmail;
+};
+
+/** Transforma "/" ou "/?cupom=X" no endereço completo da loja. */
+function urlAbsoluta(href?: string) {
+  const raw = (href ?? "").trim();
+  if (!raw) return `${APP_URL}/checkout`;
+  if (/^https?:\/\//i.test(raw)) return raw;
+  return `${APP_URL}${raw.startsWith("/") ? "" : "/"}${raw}`;
+}
+
+export function renderAbandonedCartEmail(order: OrderEmailInput, opts?: AbandonedEmailOptions) {
   const firstName = (order.customer.name || "").trim().split(" ")[0] || "Cliente";
-  const checkoutUrl = `${APP_URL}/checkout`;
+  const checkoutUrl = urlAbsoluta(opts?.ctaHref);
+  const oferta = opts?.oferta;
 
   const itemRows = order.items
     .map((item) => {
       const lineTotal = item.price * item.quantity;
       const imgCell = item.image
         ? `<td width="56" style="padding:10px 12px 10px 0;vertical-align:top;">
-             <img src="${escapeHtml(item.image)}" width="56" height="56" alt="" style="display:block;width:56px;height:56px;border-radius:8px;border:1px solid ${C.line};object-fit:cover;" />
+             <img src="${escapeHtml(imgAbsoluta(item.image))}" width="56" height="56" alt="" style="display:block;width:56px;height:56px;border-radius:8px;border:1px solid ${C.line};object-fit:cover;" />
            </td>`
         : `<td width="56" style="padding:10px 12px 10px 0;vertical-align:top;">
              <div style="width:56px;height:56px;border-radius:8px;border:1px solid ${C.line};background:${C.cardSoft};"></div>
@@ -316,7 +342,9 @@ export function renderAbandonedCartEmail(order: OrderEmailInput) {
     })
     .join("");
 
-  const subject = `${firstName}, seus doces ficaram no carrinho 🍓 · ${BRAND_NAME}`;
+  const subject = oferta
+    ? `${firstName}, ${oferta.pct}% OFF pra fechar seu pedido 🍓 · ${BRAND_NAME}`
+    : `${firstName}, seus doces ficaram no carrinho 🍓 · ${BRAND_NAME}`;
   const shipping = order.shipping ?? 0;
   const amber = "#b45309";
   const amberSoft = "#fff7ed";
@@ -368,6 +396,14 @@ export function renderAbandonedCartEmail(order: OrderEmailInput) {
           </div>
         </div>
 
+        ${oferta ? `<div style="padding:0 24px 16px;background:${C.cardSoft};">
+          <div style="background:${C.accentSoft};border:1px dashed ${C.accentBorder};border-radius:12px;padding:14px;text-align:center;">
+            <p style="margin:0 0 4px;font-size:11px;color:${C.muted};text-transform:uppercase;letter-spacing:1.2px;font-weight:700;">Cupom liberado pra você</p>
+            <p style="margin:0 0 4px;font-size:22px;font-weight:800;color:${C.accent};letter-spacing:1px;">${escapeHtml(oferta.cupom)}</p>
+            <p style="margin:0;font-size:12px;color:${C.text};">${oferta.pct}% de desconto — já vem aplicado no botão acima.</p>
+          </div>
+        </div>` : ""}
+
         <div style="padding:0 24px 4px;background:${C.cardSoft};">
           <p style="margin:0 0 6px;font-size:11px;font-weight:800;color:${C.primary};letter-spacing:1.2px;text-transform:uppercase;">Itens que ficaram</p>
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid ${C.line};">
@@ -399,7 +435,7 @@ export function renderAbandonedCartEmail(order: OrderEmailInput) {
         <div style="padding:0 24px 22px;background:${C.cardSoft};">
           <div style="background:${amberSoft};border:1px solid ${amberBorder};border-radius:9px;padding:12px;text-align:center;">
             <p style="margin:0;font-size:12px;color:${amber};line-height:1.45;">
-              Gelada é o tipo de coisa que não pode faltar. Finalize agora e receba em até 1 hora. 🛵
+              Doce fresquinho é melhor no mesmo dia. Finalize agora e receba em até 1 hora. 🛵
             </p>
           </div>
         </div>
@@ -411,6 +447,106 @@ export function renderAbandonedCartEmail(order: OrderEmailInput) {
         <p style="margin:0;font-size:11px;color:${C.muted};line-height:1.55;">
           Em caso de dúvidas, basta responder este e-mail.
         </p>
+      </div>
+    </div>
+
+    <div style="background:${C.dark};padding:28px 32px;text-align:center;">
+      <div style="display:inline-block;background:#ffffff;border-radius:14px;padding:10px 16px;">
+        <img src="${BRAND_LOGO_URL}" alt="${BRAND_NAME}" height="64" style="display:block;height:64px;width:auto;max-width:200px;border:0;outline:none;text-decoration:none;" />
+      </div>
+      <div style="width:42px;height:2px;background:${C.accent};margin:10px auto 14px;"></div>
+      <p style="margin:0 0 14px;font-size:11px;color:${C.mutedSoft};line-height:1.45;">
+        Doces com entrega rápida.
+      </p>
+      <div style="border-top:1px solid ${C.footerLine};padding-top:14px;">
+        <p style="margin:0;font-size:11px;color:#8a8a8a;">© ${new Date().getFullYear()} ${BRAND_NAME}. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+  return { subject, html };
+}
+
+/** Lead frio: cliente que gerou o PIX faz dias e sumiu. Não cobra pagamento —
+ *  lembra do que ele montou e convida a voltar pra loja. */
+export function renderReengagementEmail(order: OrderEmailInput, opts?: { ctaHref?: string }) {
+  const firstName = (order.customer.name || "").trim().split(" ")[0] || "Cliente";
+  const lojaUrl = urlAbsoluta(opts?.ctaHref || "/");
+
+  const itemRows = order.items
+    .slice(0, 3)
+    .map((item) => {
+      const imgCell = item.image
+        ? `<td width="56" style="padding:10px 12px 10px 0;vertical-align:top;">
+             <img src="${escapeHtml(imgAbsoluta(item.image))}" width="56" height="56" alt="" style="display:block;width:56px;height:56px;border-radius:8px;border:1px solid ${C.line};object-fit:cover;" />
+           </td>`
+        : `<td width="56" style="padding:10px 12px 10px 0;vertical-align:top;">
+             <div style="width:56px;height:56px;border-radius:8px;border:1px solid ${C.line};background:${C.cardSoft};"></div>
+           </td>`;
+      return `
+        <tr>
+          ${imgCell}
+          <td style="padding:10px 0;vertical-align:top;color:${C.text};font-size:13px;line-height:18px;">
+            <strong style="display:block;color:${C.primary};font-size:13px;font-weight:700;">${escapeHtml(item.name)}</strong>
+            <span style="display:inline-block;margin-top:3px;color:${C.muted};font-size:11px;">${formatBRL(item.price)}</span>
+          </td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  const subject = `${firstName}, seus doces ainda estão te esperando 🍓 · ${BRAND_NAME}`;
+
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>${escapeHtml(subject)}</title>
+</head>
+<body style="margin:0;padding:0;background:${C.bg};font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
+    Fizemos doce novo essa semana — dá uma olhada no cardápio da ${BRAND_NAME}.
+  </div>
+
+  <div style="max-width:600px;margin:0 auto;background:${C.card};">
+    <div style="background:${C.accent};height:5px;"></div>
+
+    <div style="background:${C.card};padding:24px 32px 20px;text-align:center;border-bottom:1px solid ${C.lineSoft};">
+      <img src="${BRAND_LOGO_URL}" alt="${BRAND_NAME}" height="80" style="display:inline-block;height:80px;width:auto;max-width:240px;border:0;outline:none;text-decoration:none;" />
+      <p style="margin:6px 0 0;font-size:11px;color:${C.muted};letter-spacing:1.4px;text-transform:uppercase;">Doces com entrega rápida 🍓</p>
+    </div>
+
+    <div style="background:${C.cardSofter};padding:22px 30px;text-align:center;border-bottom:1px solid ${C.line};">
+      <h1 style="margin:0 0 7px;font-size:19px;color:${C.primary};font-weight:700;line-height:1.25;">
+        Oi, ${escapeHtml(firstName)}! Saudade da sua visita 🍓
+      </h1>
+      <p style="margin:0;font-size:12px;color:${C.muted};line-height:1.45;">
+        Sem cobrança nenhuma — é só um oi. Os doces saem fresquinhos todo dia e a entrega continua rápida.
+      </p>
+    </div>
+
+    <div style="padding:16px 30px;">
+      <div style="background:${C.card};border-radius:15px;border:1px solid ${C.line};overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,0.08);">
+        <div style="padding:22px 24px 18px;background:${C.cardSoft};text-align:center;">
+          <p style="margin:0 0 14px;font-size:13px;color:${C.text};line-height:1.5;">
+            Da última vez você tinha escolhido isto aqui:
+          </p>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid ${C.line};text-align:left;">
+            ${itemRows}
+          </table>
+        </div>
+
+        <div style="padding:0 24px 22px;background:${C.cardSoft};">
+          <a href="${escapeHtml(lojaUrl)}" style="display:block;background:${C.accent};color:#ffffff;text-decoration:none;padding:15px 18px;border-radius:10px;font-size:15px;font-weight:700;text-align:center;">
+            Ver o cardápio de hoje
+          </a>
+          <p style="margin:12px 0 0;font-size:11px;color:${C.muted};text-align:center;line-height:1.5;">
+            Se preferir, é só responder este e-mail que a gente monta seu pedido.
+          </p>
+        </div>
       </div>
     </div>
 

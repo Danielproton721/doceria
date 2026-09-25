@@ -4,6 +4,7 @@
 
 import { kvClaimOnce, kvConfigured, kvDel, kvGetJSON, kvSetJSON, kvZAdd, kvZRem, kvZRevRange } from "./kv"
 import { getTxGateway, type GatewayId } from "@/lib/gateways/active"
+import { getEmailManualEm, getEmailsPagoEm } from "./manual-email"
 import type { OrderEmailInput } from "./order-email"
 
 export { kvConfigured }
@@ -95,8 +96,15 @@ export async function listRecentOrders(limit = 100): Promise<AdminOrder[]> {
     }
     // Gateway que processou: pedidos antigos (pré-multi-gateway) eram todos Pagou.ai.
     const gateway = (await getTxGateway(txid)) ?? "pagou"
-    const emailManualEm = await kvGetJSON<string>(emailManualKey(txid)).catch(() => null)
-    out.push({ ...order, txid, status, gateway, emailManualEm: emailManualEm ?? null, emailConfirmacaoEm: null })
+    const [emailManualEm, pagoEm] = await Promise.all([getEmailManualEm(txid), getEmailsPagoEm(txid)])
+    out.push({
+      ...order,
+      txid,
+      status,
+      gateway,
+      emailManualEm: status === "pago" ? pagoEm.manualEm : emailManualEm,
+      emailConfirmacaoEm: pagoEm.automaticoEm,
+    })
   }
   return out
 }
