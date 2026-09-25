@@ -74,6 +74,11 @@ export async function kvZRevRange(key: string, start: number, stop: number): Pro
   return Array.isArray(res) ? res.map(String) : []
 }
 
+// Sorted set: remove UM membro (usado ao apagar um pedido pelo painel).
+export async function kvZRem(key: string, member: string): Promise<void> {
+  await command(["ZREM", pk(key), member])
+}
+
 // Sorted set: remove membros com score no intervalo [min, max] (usado pra expirar
 // presença antiga). Retorna quantos foram removidos.
 export async function kvZRemRangeByScore(key: string, min: number, max: number): Promise<number> {

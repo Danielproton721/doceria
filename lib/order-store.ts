@@ -2,7 +2,7 @@
 // na criação do PIX (chave = txid), e o webhook da Pagou.ai lê de volta quando o
 // pagamento confirma — assim o e-mail sai mesmo se o cliente fechar a aba.
 
-import { kvClaimOnce, kvConfigured, kvDel, kvGetJSON, kvSetJSON, kvZAdd, kvZRevRange } from "./kv"
+import { kvClaimOnce, kvConfigured, kvDel, kvGetJSON, kvSetJSON, kvZAdd, kvZRem, kvZRevRange } from "./kv"
 import { getTxGateway, type GatewayId } from "@/lib/gateways/active"
 import type { OrderEmailInput } from "./order-email"
 
@@ -19,6 +19,10 @@ export type AdminOrder = StoredOrder & {
   txid: string
   status: "pago" | "aguardando" | "abandonado"
   gateway: GatewayId
+  /** Último e-mail disparado à mão pelo painel (ISO) — null se nunca. */
+  emailManualEm?: string | null
+  /** Hora do e-mail automático de confirmação. Hoje não é registrado: fica null. */
+  emailConfirmacaoEm?: string | null
 }
 
 // 3 dias de folga entre criar o PIX e a confirmação/reprocessamento do webhook.
@@ -30,6 +34,8 @@ const orderKey = (txid: string) => `order:${txid}`
 const emailLockKey = (txid: string) => `order-email:${txid}`
 const abandonLockKey = (txid: string) => `abandon-sent:${txid}`
 const paidKey = (txid: string) => `paid:${txid}`
+// Quando o painel dispara um e-mail à mão, guardamos a hora (ISO) aqui.
+const emailManualKey = (txid: string) => `email-manual:${txid}`
 const ORDERS_INDEX = "orders:index"
 
 // Gera um código de pedido no mesmo formato do front (XX000000000XX). Usado só
@@ -89,13 +95,41 @@ export async function listRecentOrders(limit = 100): Promise<AdminOrder[]> {
     }
     // Gateway que processou: pedidos antigos (pré-multi-gateway) eram todos Pagou.ai.
     const gateway = (await getTxGateway(txid)) ?? "pagou"
-    out.push({ ...order, txid, status, gateway })
+    const emailManualEm = await kvGetJSON<string>(emailManualKey(txid)).catch(() => null)
+    out.push({ ...order, txid, status, gateway, emailManualEm: emailManualEm ?? null, emailConfirmacaoEm: null })
   }
   return out
 }
 
 // true = você ganhou o direito de enviar o e-mail desse pedido.
 // false = já foi reservado/enviado por outro caminho (front ou webhook).
+/** Registra que o painel disparou um e-mail à mão pra esse pedido. */
+export async function markOrderEmailManual(txid: string, quandoISO: string): Promise<void> {
+  if (!kvConfigured()) return
+  await kvSetJSON(emailManualKey(txid), quandoISO, ORDER_TTL_SECONDS)
+}
+
+/** Lê a hora do último e-mail manual (ISO) ou null. */
+export async function getOrderEmailManual(txid: string): Promise<string | null> {
+  if (!kvConfigured()) return null
+  return (await kvGetJSON<string>(emailManualKey(txid))) ?? null
+}
+
+/** Apaga o pedido de vez: snapshot, marca de pago, travas e o índice do painel. */
+export async function deleteOrder(txid: string): Promise<boolean> {
+  if (!kvConfigured()) return false
+  const existia = Boolean(await kvGetJSON(orderKey(txid)))
+  await Promise.all([
+    kvDel(orderKey(txid)),
+    kvDel(paidKey(txid)),
+    kvDel(emailLockKey(txid)),
+    kvDel(abandonLockKey(txid)),
+    kvDel(emailManualKey(txid)),
+  ])
+  await kvZRem(ORDERS_INDEX, txid)
+  return existia
+}
+
 export async function claimOrderEmail(txid: string): Promise<boolean> {
   return kvClaimOnce(emailLockKey(txid), ORDER_TTL_SECONDS)
 }
